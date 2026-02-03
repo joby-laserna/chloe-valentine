@@ -161,8 +161,21 @@
     box-shadow: 0 6px 20px rgba(244,114,182,.25);
     animation: gentleBob 3s ease-in-out infinite;
   }
-  .gif-center img { width:100%; height:100%; object-fit:cover; }
-  .gif-center .placeholder { font-size:.72rem; color:var(--text-soft); text-align:center; padding:12px; line-height:1.3; }
+  .gif-center { position: relative; }
+  .gif-center img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+  /* happy visible by default, sad hidden */
+  .gif-center .img-happy { opacity: 1; z-index: 1; }
+  .gif-center .img-sad   { opacity: 0; z-index: 2; }
+  /* when .sad-active is added, flip them */
+  .gif-center.sad-active .img-happy { opacity: 0; }
+  .gif-center.sad-active .img-sad   { opacity: 1; }
   @keyframes gentleBob {
     0%,100% { transform: translateY(0); }
     50%     { transform: translateY(-6px); }
@@ -233,6 +246,27 @@
     100% { transform: scale(1);  opacity:1; }
   }
 
+  /* --- spinning cat on yes screen --- */
+  .spin-cat {
+    width: 140px;
+    height: 140px;
+    margin: 16px auto 0;
+    border-radius: 50%;
+    border: 4px solid var(--orange-dark);
+    background: linear-gradient(135deg, var(--orange-light), var(--pink-light));
+    overflow: hidden;
+    box-shadow: 0 6px 22px rgba(251,146,60,.3);
+    animation: spinCat 2.4s linear infinite;
+  }
+  .spin-cat img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  @keyframes spinCat {
+    to { transform: rotate(360deg); }
+  }
+
   /* confetti canvas on top */
   #confetti-canvas {
     position: fixed;
@@ -263,10 +297,10 @@
   <!-- top gif row  ← paste your Chiikawa Hachiware GIF <img> tags here -->
   <div class="gif-row">
     <div class="gif-box">
-      <img src="hachiware-jump.gif" alt="hachiware jump">
+      <img src="hachiware-eat.gif" alt="hachiware eat">
     </div>
     <div class="gif-box">
-      <img src="hachiware-eat.gif" alt="hachiware eat">
+      <img src="hachiware-jump.gif" alt="hachiware jump">
     </div>
     <div class="gif-box">
       <img src="hachiware-3D.gif" alt="hachiware 3D">
@@ -276,11 +310,12 @@
   <!-- main question view -->
   <div id="question-view">
     <h1 class="title">Will you be<br><em>my Valentine?</em></h1>
-    <p class="subtitle">✨ mwah mwah ✨</p>
+    <p class="subtitle">✨  ✨</p>
 
-    <!-- center gif  ← paste your favourite Hachiware GIF here -->
-    <div class="gif-center">
-        <img src="hachiware-spin.gif" alt="hachiware spin">
+    <!-- center gif: happy shown by default, sad shown on No hover -->
+    <div class="gif-center" id="gifCenter">
+        <img class="img-happy" src="hachiware-worry.gif" alt="hachiware happy">
+        <img class="img-sad"   src="hachiware-spin.gif"   alt="hachiware sad">
     </div>
 
     <div class="btn-row">
@@ -291,12 +326,25 @@
 
   <!-- shown after clicking Yes -->
   <div class="yes-msg" id="yes-msg">
-    <div class="yay-title">Yay!! 💕</div>
-    <div class="yay-sub">I can't wait! ♡</div>
+    <div class="yay-title">Yaay!! 💕</div>
+    <div class="yay-sub">Love youu! ♡</div>
+    <!-- spinning cat image on the yes screen -->
+    <div class="spin-cat">
+      <img src="elgatito.gif" alt="elgatito">
+    </div>
   </div>
 </div>
 
 <script>
+// ─── Happy ↔ Sad image swap on No hover ───────────────────────
+(function(){
+  const btnNo     = document.getElementById('btn-no');
+  const gifCenter = document.getElementById('gifCenter');
+
+  btnNo.addEventListener('mouseenter', () => gifCenter.classList.add('sad-active'));
+  btnNo.addEventListener('mouseleave', () => gifCenter.classList.remove('sad-active'));
+})();
+
 // ─── Runaway "No" button ───────────────────────────────────────
 (function(){
   const btn   = document.getElementById('btn-no');
