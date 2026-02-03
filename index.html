@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>💕 Will You Be My Valentine? 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --pink-light: #ffe0ec;
+    --pink-mid:   #ffb6d9;
+    --pink-dark:  #f472b6;
+    --orange-light: #ffe8d6;
+    --orange-mid:   #ffcba4;
+    --orange-dark:  #fb923c;
+    --cream:      #fff5f0;
+    --text-main:  #8b4565;
+    --text-soft:  #c07898;
+  }
+
+  * {
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--pink-light) 0%, var(--cream) 40%, var(--orange-light) 70%, var(--pink-light) 100%);
+    font-family: 'Quicksand', sans-serif;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* --- floating hearts background --- */
+  .heart {
+    position: fixed;
+    opacity: 0.18;
+    font-size: 2rem;
+    animation: floatHeart linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .heart:nth-child(1){ left:5%;  font-size:1.4rem; animation-duration:8s;  animation-delay:0s; }
+  .heart:nth-child(2){ left:15%; font-size:2.2rem; animation-duration:11s; animation-delay:2s; }
+  .heart:nth-child(3){ left:28%; font-size:1rem;   animation-duration:9s;  animation-delay:4s; }
+  .heart:nth-child(4){ left:42%; font-size:1.8rem; animation-duration:12s; animation-delay:1s; }
+  .heart:nth-child(5){ left:55%; font-size:1.2rem; animation-duration:7s;  animation-delay:3s; }
+  .heart:nth-child(6){ left:68%; font-size:2rem;   animation-duration:10s; animation-delay:5s; }
+  .heart:nth-child(7){ left:80%; font-size:1.5rem; animation-duration:9s;  animation-delay:0.5s;}
+  .heart:nth-child(8){ left:90%; font-size:1rem;   animation-duration:11s; animation-delay:2.5s;}
+
+  @keyframes floatHeart {
+    0%   { transform: translateY(100vh) rotate(0deg); opacity:0; }
+    10%  { opacity:.18; }
+    90%  { opacity:.18; }
+    100% { transform: translateY(-120px) rotate(360deg); opacity:0; }
+  }
+
+  /* --- card wrapper --- */
+  .card {
+    position: relative;
+    z-index: 1;
+    background: rgba(255,255,255,0.72);
+    backdrop-filter: blur(12px);
+    border: 2px solid var(--pink-mid);
+    border-radius: 32px;
+    padding: 44px 40px 48px;
+    max-width: 480px;
+    width: 90%;
+    text-align: center;
+    box-shadow:
+      0 8px 32px rgba(244,114,182,.18),
+      inset 0 1px 0 rgba(255,255,255,.6);
+    animation: cardPop .6s cubic-bezier(.34,1.56,.64,1) both;
+  }
+  @keyframes cardPop {
+    0%   { transform: scale(.85); opacity:0; }
+    100% { transform: scale(1);   opacity:1; }
+  }
+
+  /* decorative border dots */
+  .card::before {
+    content:'';
+    position: absolute;
+    inset: 6px;
+    border-radius: 28px;
+    border: 2px dashed var(--orange-mid);
+    pointer-events: none;
+  }
+
+  /* --- gif row --- */
+  .gif-row {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .gif-box {
+    width: 100px;
+    height: 100px;
+    border-radius: 20px;
+    border: 3px solid var(--pink-mid);
+    background: var(--pink-light);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(244,114,182,.2);
+    transition: transform .25s;
+  }
+  .gif-box:hover { transform: scale(1.08) rotate(-2deg); }
+  .gif-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  /* placeholder text when no gif is loaded */
+  .gif-box .placeholder {
+    font-size: 0.7rem;
+    color: var(--text-soft);
+    text-align: center;
+    line-height: 1.3;
+    padding: 8px;
+  }
+
+  /* --- title --- */
+  .title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.1rem;
+    color: var(--text-main);
+    line-height: 1.25;
+    margin-bottom: 6px;
+  }
+  .title em {
+    font-style: italic;
+    color: var(--orange-dark);
+  }
+
+  .subtitle {
+    color: var(--text-soft);
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+    font-weight: 600;
+  }
+
+  /* --- middle gif --- */
+  .gif-center {
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 24px;
+    border-radius: 50%;
+    border: 4px solid var(--pink-dark);
+    background: linear-gradient(135deg, var(--pink-light), var(--orange-light));
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(244,114,182,.25);
+    animation: gentleBob 3s ease-in-out infinite;
+  }
+  .gif-center img { width:100%; height:100%; object-fit:cover; }
+  .gif-center .placeholder { font-size:.72rem; color:var(--text-soft); text-align:center; padding:12px; line-height:1.3; }
+  @keyframes gentleBob {
+    0%,100% { transform: translateY(0); }
+    50%     { transform: translateY(-6px); }
+  }
+
+  /* --- buttons --- */
+  .btn-row {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .btn {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    border: none;
+    border-radius: 50px;
+    padding: 14px 38px;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+    position: relative;
+    z-index: 2;
+  }
+
+  .btn-yes {
+    background: linear-gradient(135deg, var(--pink-dark), var(--orange-dark));
+    color: #fff;
+    box-shadow: 0 5px 18px rgba(244,114,182,.4);
+  }
+  .btn-yes:hover {
+    transform: scale(1.1);
+    box-shadow: 0 7px 24px rgba(244,114,182,.55);
+  }
+  .btn-yes:active { transform: scale(1.05); }
+
+  .btn-no {
+    background: #fff;
+    color: var(--text-main);
+    border: 2.5px solid var(--pink-mid);
+    box-shadow: 0 3px 10px rgba(0,0,0,.08);
+    user-select: none;
+    /* position is set inline via JS */
+  }
+  .btn-no:hover {
+    background: var(--pink-light);
+  }
+
+  /* --- yes message (hidden by default) --- */
+  .yes-msg {
+    display: none;
+    animation: msgPop .5s cubic-bezier(.34,1.56,.64,1) both;
+  }
+  .yes-msg .yay-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--pink-dark);
+    margin-bottom: 6px;
+  }
+  .yes-msg .yay-sub {
+    color: var(--text-soft);
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  @keyframes msgPop {
+    0%   { transform: scale(.7); opacity:0; }
+    100% { transform: scale(1);  opacity:1; }
+  }
+
+  /* confetti canvas on top */
+  #confetti-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+  }
+</style>
+</head>
+<body>
+
+<!-- floating hearts -->
+<div class="heart">💕</div>
+<div class="heart">🌸</div>
+<div class="heart">💗</div>
+<div class="heart">💕</div>
+<div class="heart">🌷</div>
+<div class="heart">💗</div>
+<div class="heart">💕</div>
+<div class="heart">🌸</div>
+
+<canvas id="confetti-canvas"></canvas>
+
+<div class="card" id="card">
+
+  <!-- top gif row  ← paste your Chiikawa Hachiware GIF <img> tags here -->
+  <div class="gif-row">
+    <div class="gif-box">
+      <!-- REPLACE: <img src="your-gif-url.gif" alt="Hachiware"> -->
+      <div class="placeholder">🐶 Add<br>Hachiware<br>GIF here</div>
+    </div>
+    <div class="gif-box">
+      <!-- REPLACE: <img src="your-gif-url.gif" alt="Hachiware"> -->
+      <div class="placeholder">🐶 Add<br>Hachiware<br>GIF here</div>
+    </div>
+    <div class="gif-box">
+      <!-- REPLACE: <img src="your-gif-url.gif" alt="Hachiware"> -->
+      <div class="placeholder">🐶 Add<br>Hachiware<br>GIF here</div>
+    </div>
+  </div>
+
+  <!-- main question view -->
+  <div id="question-view">
+    <h1 class="title">Will you be<br><em>my Valentine?</em></h1>
+    <p class="subtitle">✨ my heart is yours ✨</p>
+
+    <!-- center gif  ← paste your favourite Hachiware GIF here -->
+    <div class="gif-center">
+      <!-- REPLACE: <img src="your-gif-url.gif" alt="Hachiware"> -->
+      <div class="placeholder">🐶 Add<br>Hachiware<br>GIF here</div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-yes" onclick="onYes()">Yes ♡</button>
+      <button class="btn btn-no" id="btn-no">No</button>
+    </div>
+  </div>
+
+  <!-- shown after clicking Yes -->
+  <div class="yes-msg" id="yes-msg">
+    <div class="yay-title">Yay!! 💕</div>
+    <div class="yay-sub">I can't wait! ♡</div>
+  </div>
+</div>
+
+<script>
+// ─── Runaway "No" button ───────────────────────────────────────
+(function(){
+  const btn   = document.getElementById('btn-no');
+  const card  = document.getElementById('card');
+
+  // give the button absolute positioning inside the card
+  btn.style.position = 'relative';
+
+  let offsetX = 0, offsetY = 0; // current displacement
+
+  btn.addEventListener('mouseenter', function(e){
+    // pick a random direction & magnitude
+    const angle    = Math.random() * Math.PI * 2;
+    const strength = 80 + Math.random() * 120; // 80–200 px jump
+    const dx = Math.cos(angle) * strength;
+    const dy = Math.sin(angle) * strength;
+
+    offsetX += dx;
+    offsetY += dy;
+
+    // clamp so it stays roughly on-screen (within card bounds)
+    const cardW = card.offsetWidth;
+    const cardH = card.offsetHeight;
+    const maxX  =  cardW * 0.35;
+    const maxY  =  cardH * 0.25;
+    offsetX = Math.max(-maxX, Math.min(maxX, offsetX));
+    offsetY = Math.max(-maxY, Math.min(maxY, offsetY));
+
+    btn.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+    btn.style.transition = 'transform 0.25s cubic-bezier(.34,1.56,.64,1)';
+  });
+})();
+
+// ─── Yes handler ───────────────────────────────────────────────
+function onYes(){
+  document.getElementById('question-view').style.display = 'none';
+  const msg = document.getElementById('yes-msg');
+  msg.style.display = 'block';
+  launchConfetti();
+}
+
+// ─── Confetti 🎊 ───────────────────────────────────────────────
+function launchConfetti(){
+  const canvas  = document.getElementById('confetti-canvas');
+  const ctx     = canvas.getContext('2d');
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const colors = ['#ffb6d9','#fb923c','#f472b6','#ffcba4','#fff0f5','#ffd1e8'];
+  let pieces = [];
+  for(let i=0; i<90; i++){
+    pieces.push({
+      x: canvas.width/2 + (Math.random()-0.5)*200,
+      y: canvas.height/2,
+      vx: (Math.random()-0.5)*8,
+      vy: -Math.random()*10 - 3,
+      rot: Math.random()*360,
+      rotV: (Math.random()-0.5)*12,
+      w: 8 + Math.random()*6,
+      h: 5 + Math.random()*4,
+      color: colors[Math.floor(Math.random()*colors.length)],
+      life: 1
+    });
+  }
+
+  function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    let alive = false;
+    pieces.forEach(p=>{
+      p.x  += p.vx;
+      p.y  += p.vy;
+      p.vy += 0.18; // gravity
+      p.rot += p.rotV;
+      p.life -= 0.008;
+      if(p.life <= 0) return;
+      alive = true;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI/180);
+      ctx.globalAlpha = p.life;
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    });
+    if(alive) requestAnimationFrame(animate);
+  }
+  animate();
+}
+</script>
+</body>
+</html>
